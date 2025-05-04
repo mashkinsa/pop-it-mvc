@@ -1,0 +1,22 @@
+{
+    "name": "mashkinsa/pop-it-mvc",
+    "description": "-",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "mashkinsa",
+            "email": "mariasmolovik1@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.4"
+    },
+    "autoload": {
+        "psr-4": {
+            "Src\\": "core/Src/",
+            "": "app/"
+        }
+    }
+}
