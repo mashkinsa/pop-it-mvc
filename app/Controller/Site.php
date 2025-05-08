@@ -4,6 +4,7 @@ namespace Controller;
 
 use Model\Building;
 use Model\Post;
+use Model\RoomType;
 use Src\View;
 use Src\Request;
 use Model\User;
@@ -48,21 +49,65 @@ class Site
             }
         }
 
-        return new View('site.add_staff');
+        return new View('site.add_staff', ['message' => $message ?? '']);
     }
 
+    public function add_building(Request $request): string
+    {
+        if ($request->method === 'POST') {
+            try {
+                $building = Building::create([
+                    'name' => $request->name,
+                    'address' => $request->address
+                ]);
+
+                $message = 'Здание успешно добавлено!';
+
+            } catch (\Exception $e) {
+                $message = 'Ошибка при добавлении здания: ' . $e->getMessage();
+            }
+        }
+
+        return new View('site.add_building', ['message' => $message ?? '']);
+    }
+
+    public function add_room(Request $request): string
+    {
+        // Получаем все здания и типы помещений из БД
+        $buildings = Building::all();
+        $roomTypes = RoomType::all();
+
+        if ($request->method === 'POST') {
+            try {
+                $room = Room::create([
+                    'number' => $request->number,
+                    'square' => $request->square,
+                    'quantity' => $request->quantity ?? null,
+                    'id_building' => $request->id_building,
+                    'id_type' => $request->id_type
+                ]);
+
+                $message = 'Помещение успешно добавлено!';
+            } catch (\Exception $e) {
+                $message = 'Ошибка при добавлении помещения: ' . $e->getMessage();
+            }
+        }
+
+        return new View('site.add_room', [
+            'message' => $message ?? '',
+            'buildings' => $buildings,
+            'roomTypes' => $roomTypes
+        ]);
+    }
 
     public function login(Request $request): string
     {
-        //Если просто обращение к странице, то отобразить форму
         if ($request->method === 'GET') {
             return new View('site.login');
         }
-        //Если удалось аутентифицировать пользователя, то редирект
         if (Auth::attempt($request->all())) {
             app()->route->redirect('/hello');
         }
-        //Если аутентификация не удалась, то сообщение об ошибке
         return new View('site.login', ['message' => 'Неправильные логин или пароль']);
     }
 
@@ -70,6 +115,19 @@ class Site
     {
         Auth::logout();
         app()->route->redirect('/hello');
+    }
+    public function counting(): string
+    {
+        return new View('site.counting', ['message' => 'hello working']);
+    }
+    public function countingtwo(): string
+    {
+        return new View('site.countingtwo', ['message' => 'hello working']);
+    }
+
+    public function countingthree(): string
+    {
+        return new View('site.countingthree', ['message' => 'hello working']);
     }
 }
 

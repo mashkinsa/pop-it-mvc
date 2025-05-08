@@ -40,8 +40,12 @@
         else:
         ?>
             <a class="content__list" href="<?= app()->route->getUrl('/add_staff') ?>">Добавить сотрудника</a>
-            <a class="content__list" href="<?= app()->route->getUrl('/building') ?>">Добавить здание</a>
-            <a class="content__list" href="<?= app()->route->getUrl('/room') ?>">Добавить помещение</a>
+            <a class="content__list" href="<?= app()->route->getUrl('/add_building') ?>">Добавить здание</a>
+            <a class="content__list" href="<?= app()->route->getUrl('/add_room') ?>">Добавить помещение</a>
+            <a class="content__list" href="<?= app()->route->getUrl('/rooms') ?>">Выбор помещений по зданию</a>
+            <a class="content__list" href="<?= app()->route->getUrl('/countingtwo') ?>">Выбор зданий по типу помещению</a>
+            <a class="content__list" href="<?= app()->route->getUrl('/counting') ?>">Подсчет площади помещений по зданиям</a>
+            <a class="content__list" href="<?= app()->route->getUrl('/countingthree') ?>">Подсчет количества мест по зданиям</a>
             <?= $content ?? '' ?>
         <?php
                 endif;

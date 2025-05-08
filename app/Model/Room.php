@@ -9,7 +9,10 @@ class Room extends Model
 {
     use HasFactory;
 
+    protected $table = 'room';
     public $timestamps = false;
+    protected $primaryKey = 'id_room';
+
     protected $fillable = [
         'number',
         'id_type',
@@ -18,15 +21,15 @@ class Room extends Model
         'id_building'
     ];
 
-    // Связь с таблицей building
+    // Связь с зданием
     public function building()
     {
-        return $this->belongsTo(Building::class, 'id_building');
+        return $this->belongsTo(Building::class, 'id_building', 'id_building');
     }
 
-    // Связь с таблицей room_type
+    // Связь с типом помещения
     public function type()
     {
-        return $this->belongsTo(RoomType::class, 'id_type');
+        return $this->belongsTo(RoomType::class, 'id_type', 'id_type');
     }
 }

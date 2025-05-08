@@ -170,3 +170,78 @@ h3 {
     margin: 30px auto; /* Центрирование по горизонтали */
     text-align: center; /* Центрирование содержимого */
 }
+
+.filter-form {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 5px;
+}
+
+.rooms-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.rooms-table th, .rooms-table td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.rooms-table th {
+    background-color: #f2f2f2;
+}
+
+.form-control {
+    padding: 8px;
+    width: 300px;
+    margin-right: 10px;
+}
+
+.btn {
+    padding: 8px 15px;
+    background: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Все предыдущие стили остаются без изменений */
+
+/* Добавляем новые стили для этой страницы */
+.total-area-box {
+    max-width: 750px;
+    margin: 20px auto;
+    padding: 15px;
+    background: #f2f2f2;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    border: 1px solid #ddd;
+}
+
+.rooms-table th:first-child,
+.rooms-table td:first-child {
+    text-align: center;
+    width: 50px;
+}
+
+.room-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#select-all {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+/* Стили для чекбоксов */
+input[type="checkbox"] {
+    accent-color: #53cd94;
+    transform: scale(1.2);
+}
