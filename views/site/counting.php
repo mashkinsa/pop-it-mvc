@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Подсчет площади помещений</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/pop-it-mvc/public/styles.css">
 </head>
 <body>
 <h1>Подсчет площади помещений</h1>
@@ -21,7 +21,7 @@
 
 <div id="total-area" class="total-area-box">
     Общая площадь выбранных помещений: <span id="selected-area">183 м²</span>
-    , Общая площадь помещений в здании: <span id="total-building-area">223 м²</span>
+    <p>Общая площадь помещений в здании: <span id="total-building-area">223 м²</span>
 </div>
 
 <table class="rooms-table">

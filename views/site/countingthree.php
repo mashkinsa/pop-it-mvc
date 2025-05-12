@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Подсчет посадочных мест</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="/pop-it-mvc/public/styles.css">
 </head>
 <body>
 <h1>Подсчет посадочных мест</h1>
@@ -21,7 +21,7 @@
 
 <div id="total-seats" class="total-area-box">
     Общее количество выбранных мест: <span id="selected-seats">153</span>
-    , Общее количество мест в здании: <span id="total-building-seats">168</span>
+    <p>Общее количество мест в здании: <span id="total-building-seats">168</span>
 </div>
 
 <table class="rooms-table">
