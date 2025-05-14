@@ -14,17 +14,11 @@
         <div class="header_inner">
             <nav class="menu">
                 <a class="menu__list" href="<?= app()->route->getUrl('/hello') ?>">Главная</a>
-                <?php
-                if (!app()->auth::check()):
-                    ?>
+                <?php if (!app()->auth::check()): ?>
                     <a class="menu__list" href="<?= app()->route->getUrl('/login') ?>">Вход</a>
-                <?php
-                else:
-                    ?>
+                <?php else: ?>
                     <a class="menu__list" href="<?= app()->route->getUrl('/logout') ?>">Выйти (<?= app()->auth::user()->name ?>)</a>
-                <?php
-                endif;
-                ?>
+                <?php endif; ?>
             </nav>
         </div>
     </div>
@@ -32,23 +26,24 @@
 
 <main>
     <div class="content">
-        <?php
-                if (!app()->auth::check()):
-        ?>
-        <?= $content ?? '' ?>
-        <?php
-        else:
-        ?>
-            <a class="content__list" href="<?= app()->route->getUrl('/add_staff') ?>">Добавить сотрудника</a>
-            <a class="content__list" href="<?= app()->route->getUrl('/add_building') ?>">Добавить здание</a>
-            <a class="content__list" href="<?= app()->route->getUrl('/add_room') ?>">Добавить помещение</a>
-            <a class="content__list" href="<?= app()->route->getUrl('/countingtwo') ?>">Выбор зданий по типу помещению</a>
-            <a class="content__list" href="<?= app()->route->getUrl('/counting') ?>">Подсчет площади помещений по зданиям</a>
-            <a class="content__list" href="<?= app()->route->getUrl('/countingthree') ?>">Подсчет количества мест по зданиям</a>
+        <?php if (!app()->auth::check()): ?>
             <?= $content ?? '' ?>
-        <?php
-                endif;
-        ?>
+        <?php else: ?>
+            <?php if (app()->auth::user()->role === 'admin'): ?>
+                <!-- Меню для администратора -->
+                <a class="content__list" href="<?= app()->route->getUrl('/add_staff') ?>">Добавить сотрудника</a>
+                <a class="content__list" href="<?= app()->route->getUrl('/staff') ?>">Список сотрудников</a>
+            <?php elseif (app()->auth::user()->role === 'staff_dekanat'): ?>
+                <!-- Меню для сотрудника деканата -->
+                <a class="content__list" href="<?= app()->route->getUrl('/add_building') ?>">Добавить здание</a>
+                <a class="content__list" href="<?= app()->route->getUrl('/add_room') ?>">Добавить помещение</a>
+                <a class="content__list" href="<?= app()->route->getUrl('/choice') ?>">Выбор зданий по типу помещению</a>
+                <a class="content__list" href="<?= app()->route->getUrl('/area') ?>">Подсчет площади помещений по зданиям</a>
+                <a class="content__list" href="<?= app()->route->getUrl('/seats') ?>">Подсчет количества мест по зданиям</a>
+            <?php endif; ?>
+
+            <?= $content ?? '' ?>
+        <?php endif; ?>
     </div>
 </main>
 

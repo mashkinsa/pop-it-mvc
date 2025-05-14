@@ -2,13 +2,22 @@
 
 use Src\Route;
 
-Route::add('GET', '/hello', [Controller\Site::class, 'hello'])
-    ->middleware('auth');
-Route::add(['GET', 'POST'], '/add_staff', [Controller\Site::class, 'add_staff'])->middleware('admin');
-Route::add(['GET', 'POST'], '/login', [Controller\Site::class, 'login']);
-Route::add('GET', '/logout', [Controller\Site::class, 'logout']);
-Route::add('GET', '/counting', [Controller\Site::class, 'counting']) ->middleware('staff_dekanat');
-Route::add('GET', '/countingtwo', [Controller\Site::class, 'countingtwo']) ->middleware('staff_dekanat');
-Route::add('GET', '/countingthree', [Controller\Site::class, 'countingthree']) ->middleware('staff_dekanat');
-Route::add(['GET', 'POST'], '/add_room', [Controller\Site::class, 'add_room']) ->middleware('staff_dekanat');
-Route::add(['GET', 'POST'], '/add_building', [Controller\Site::class, 'add_building']) ->middleware('staff_dekanat');
+// Основные маршруты
+Route::add('GET', '/hello', [Controller\SiteController::class, 'hello'])->middleware('auth');
+Route::add(['GET', 'POST'], '/login', [Controller\UserController::class, 'login']);
+Route::add('GET', '/logout', [Controller\UserController::class, 'logout']);
+
+// Маршруты для работы с пользователями (только для админа)
+Route::add(['GET', 'POST'], '/add_staff', [Controller\UserController::class, 'addStaff'])->middleware('admin');
+Route::add('GET', '/staff', [Controller\UserController::class, 'staff'])->middleware('admin');
+
+// Маршруты для работы с помещениями
+Route::add(['GET', 'POST'], '/add_room', [Controller\RoomController::class, 'addRoom'])->middleware('staff_dekanat');
+Route::add(['GET', 'POST'], '/add_building', [Controller\BuildingController::class, 'addBuilding'])->middleware('staff_dekanat');
+
+// Маршруты для отчетов
+Route::add('GET', '/area', [Controller\ReportController::class, 'areaReport'])->middleware('staff_dekanat');
+Route::add('GET', '/seats', [Controller\ReportController::class, 'seatsReport'])->middleware('staff_dekanat');
+Route::add('GET', '/choice', [Controller\ReportController::class, 'choiceReport'])->middleware('staff_dekanat');
+
+
