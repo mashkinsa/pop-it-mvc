@@ -135,7 +135,7 @@ h3 {
 .form__room{
     border-radius: 20px;
     background-color: #53cd94;
-    height: 550px;
+    height: 750px;
     width: 750px; /* Ширина формы */
     margin: 30px auto; /* Центрирование по горизонтали */
     text-align: center; /* Центрирование содержимого */
@@ -208,40 +208,13 @@ h3 {
     cursor: pointer;
 }
 
-/* Все предыдущие стили остаются без изменений */
-
-/* Добавляем новые стили для этой страницы */
-.total-area-box {
-    max-width: 750px;
-    margin: 20px auto;
-    padding: 15px;
-    background: #f2f2f2;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: bold;
-    border: 1px solid #ddd;
+.error-messages {
+    color: #ff0000;
+    margin-bottom: 15px;
 }
-
-.rooms-table th:first-child,
-.rooms-table td:first-child {
-    text-align: center;
-    width: 50px;
-}
-
-.room-checkbox {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-#select-all {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-}
-
-/* Стили для чекбоксов */
-input[type="checkbox"] {
-    accent-color: #53cd94;
-    transform: scale(1.2);
+.error {
+    margin: 5px 0;
+    padding: 5px;
+    background: #ffeeee;
+    border-left: 3px solid #ff0000;
 }

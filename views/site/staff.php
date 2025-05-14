@@ -14,10 +14,22 @@
             padding: 10px;
             border: 1px solid #ddd;
             text-align: left;
+            vertical-align: middle;
         }
 
         .users-table th {
             background-color: #f2f2f2;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .avatar-column {
+            width: 70px;
         }
     </style>
 </head>
@@ -28,6 +40,7 @@
     <table class="users-table">
         <thead>
         <tr>
+            <th class="avatar-column">Аватар</th>
             <th>Фамилия</th>
             <th>Имя</th>
             <th>Отчество</th>
@@ -38,6 +51,17 @@
         <tbody>
         <?php foreach ($users as $user): ?>
             <tr>
+                <td>
+                    <?php if ($user->avatar): ?>
+                        <img src="<?= htmlspecialchars($user->avatar) ?>"
+                             alt="Аватар <?= htmlspecialchars($user->last_name) ?>"
+                             class="user-avatar">
+                    <?php else: ?>
+                        <img src="/public/images/default-avatar.jpg"
+                             alt="Аватар по умолчанию"
+                             class="user-avatar">
+                    <?php endif; ?>
+                </td>
                 <td><?= htmlspecialchars($user->last_name) ?></td>
                 <td><?= htmlspecialchars($user->first_name) ?></td>
                 <td><?= htmlspecialchars($user->patronymic ?? '—') ?></td>

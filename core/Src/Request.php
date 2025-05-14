@@ -44,4 +44,8 @@ class Request
         }
         throw new Error('Accessing a non-existent property');
     }
+    public function file(string $name): ?array
+    {
+        return $_FILES[$name] ?? null;
+    }
 }
