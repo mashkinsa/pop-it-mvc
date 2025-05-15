@@ -3,14 +3,15 @@
 
 <div class="form__room">
     <form method="post">
+        <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
         <label class="form_int">
             <input type="text" name="number" placeholder="Номер помещения" required>
         </label>
         <label class="form_int">
-            <input type="number" step="0.1" name="square" placeholder="Площадь" required>
+            <input type="number" step="0.1" name="square" placeholder="Площадь" min="0" required>
         </label>
         <label class="form_int">
-            <input type="number" name="quantity" placeholder="Количество посадочных мест" required>
+            <input type="number" name="quantity" placeholder="Количество посадочных мест" min="0" required >
         </label>
         <label class="form_int">
             <select name="id_building" required>

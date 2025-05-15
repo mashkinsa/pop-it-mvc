@@ -5,8 +5,9 @@ class ImageValidator extends AbstractValidator {
     protected string $message = 'Файл :field должен быть изображением (JPEG, PNG) до 2 МБ';
 
     public function rule(): bool {
-        if (!$this->value || !isset($this->value['tmp_name']))
-            return false;
+        if (empty($this->value['tmp_name'])) {
+            return true; // Файл не обязателен
+        }
 
         $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
         $maxSize = 2 * 1024 * 1024;
