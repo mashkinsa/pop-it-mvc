@@ -25,6 +25,7 @@
     <form method="post" enctype="multipart/form-data">
         <div class="cont__room">
             <!-- Основные поля -->
+            <input name="csrf_token" type="hidden" value="<?= app()->auth::generateCSRF() ?>"/>
             <label class="form_int">
                 <input type="text" name="last_name" placeholder="Фамилия"
                        value="<?= htmlspecialchars($request->last_name ?? '') ?>">
