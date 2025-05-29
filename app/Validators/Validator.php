@@ -35,26 +35,23 @@ class Validator
     //Валидация отдельного поля
     private function validateField(string $fieldName, array $fieldValidators): void
     {
-        //Перебираем все валидаторы, ассоциированные с полем
         foreach ($fieldValidators as $validatorName) {
-            //Отделяем от имени валидатора дополнительные аргументы
-            $tmp = explode(':', $validatorName);
-            [$validatorName, $args] = count($tmp) > 1 ? $tmp : [$validatorName, null];
-            $args = isset($args) ? explode(',', $args) : [];
+            $parts = explode(':', $validatorName);
+            $pureName = $parts[0];
+            $args = isset($parts[1]) ? explode(',', $parts[1]) : [];
 
-            //Соотносим имя валидатора с классом в массиве разрешенных валидаторов
-            $validatorClass = $this->validators[$validatorName];
-            if (!class_exists($validatorClass)) {
+            if (!isset($this->validators[$pureName])) {
                 continue;
             }
-            //Создаем объект валидатора, передаем туда параметры
+
+            $validatorClass = $this->validators[$pureName];
             $validator = new $validatorClass(
                 $fieldName,
-                $this->fields[$fieldName],
-                $args,
-                $this->messages[$validatorName]);
+                $this->fields[$fieldName] ?? null,
+                $args, // Аргументы типа ["6"] попадут в $this->args
+                $this->messages[$pureName] ?? null
+            );
 
-            //Если валидация не прошла, то добавляем ошибку в общий массив ошибок
             if (!$validator->rule()) {
                 $this->errors[$fieldName][] = $validator->validate();
             }

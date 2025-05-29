@@ -12,6 +12,7 @@ return [
     'validators' => [
         'required' => \Validators\RequireValidator::class,
         'unique' => \Validators\UniqueValidator::class,
+        'min' => \Validators\MinValidator::class,
         'image' => \Validators\ImageValidator::class,
     ],
     'routeAppMiddleware' => [

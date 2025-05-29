@@ -20,7 +20,7 @@ class UserController
                     'last_name' => ['required'],
                     'first_name' => ['required'],
                     'login' => ['required', 'unique:users,login'],
-                    'password' => ['required', 'min:6'],
+                    'password' => ['required', 'min:8'],
                     'avatar' => ['image']
                 ]);
 

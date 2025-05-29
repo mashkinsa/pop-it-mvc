@@ -47,7 +47,7 @@
             </label>
 
             <label class="form_int">
-                <input type="password" name="password" placeholder="Пароль">
+                <input type="password" name="password" placeholder="Пароль" >
             </label>
 
             <label class="form_int">
