@@ -9,7 +9,7 @@ class ImageValidator extends AbstractValidator {
             return true; // Файл не обязателен
         }
 
-        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];
+        $allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/jfif'];
         $maxSize = 2 * 1024 * 1024;
 
         // Более надежная проверка MIME-типа
