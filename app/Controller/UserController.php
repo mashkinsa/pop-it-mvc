@@ -7,7 +7,8 @@ use Validators\Validator;
 use Src\View;
 use Src\Request;
 use Src\Auth\Auth;
-
+use Mashkinsa\ImageUploader\ImageUploader;
+use Mashkinsa\ImageUploader\Exceptions\ImageUploadException;
 
 class UserController
 {
@@ -15,13 +16,12 @@ class UserController
     {
         if ($request->method === 'POST') {
             try {
-                // Валидация
+                // Валидация данных
                 $validator = new Validator($request->all(), [
                     'last_name' => ['required'],
                     'first_name' => ['required'],
                     'login' => ['required', 'unique:users,login'],
                     'password' => ['required', 'min:8'],
-                    'avatar' => ['image']
                 ]);
 
                 if ($validator->fails()) {
@@ -31,19 +31,19 @@ class UserController
                     ]);
                 }
 
+                // Обработка аватара
                 $avatarPath = '/public/images/default-avatar.jpg';
-                //Проверка наличия и успешности загрузки файла
-                if (isset($_FILES['avatar']) && $_FILES['avatar']['error'] === UPLOAD_ERR_OK) {
-                    // Получение информации о файле
-                    $file = $_FILES['avatar'];
-                    //Генерация уникального имени файла
-                    $filename = uniqid() . '.' . pathinfo($file['name'], PATHINFO_EXTENSION);
-                    //Определение пути для сохранения
-                    $uploadPath = $_SERVER['DOCUMENT_ROOT'] . '/public/images/' . $filename;
-                    //Перемещение файла из временной директории
-                    if (move_uploaded_file($file['tmp_name'], $uploadPath)) {
-                        //Как он в базе данных будет
+
+                if (isset($_FILES['avatar'])){
+                    $uploader = new ImageUploader();
+                    try {
+                        $filename = $uploader->upload(
+                            $_FILES['avatar'],
+                            $_SERVER['DOCUMENT_ROOT'] . '/public/images'
+                        );
                         $avatarPath = '/public/images/' . $filename;
+                    } catch (ImageUploadException $e) {
+                        error_log('Image upload failed: ' . $e->getMessage());
                     }
                 }
 
@@ -51,15 +51,16 @@ class UserController
                 User::create([
                     'last_name' => $request->last_name,
                     'first_name' => $request->first_name,
-                    'patronymic'=> $request->patronymic,
+                    'patronymic' => $request->patronymic,
                     'login' => $request->login,
-                    'password' => $request->password, // Хеширование в модели
-                    'avatar' => $avatarPath
+                    'password' => $request->password,
+                    'avatar' => $avatarPath,
+                    'role' => 'staff_dekanat'
                 ]);
 
                 app()->route->redirect('/staff');
 
-            } catch (Exception $e) {
+            } catch (\Exception $e) {
                 return new View('site.add_staff', [
                     'error' => 'Ошибка: ' . $e->getMessage(),
                     'old' => $request->all()
@@ -75,9 +76,11 @@ class UserController
         if ($request->method === 'GET') {
             return new View('site.login');
         }
+
         if (Auth::attempt($request->all())) {
             app()->route->redirect('/hello');
         }
+
         return new View('site.login', ['message' => 'Неправильные логин или пароль']);
     }
 
@@ -86,6 +89,7 @@ class UserController
         Auth::logout();
         app()->route->redirect('/hello');
     }
+
     public function staff(Request $request): string
     {
         $users = User::where('role', '=', 'staff_dekanat')->get();
